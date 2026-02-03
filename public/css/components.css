@@ -1,0 +1,246 @@
+/* Buttons */
+.btn {
+    display: inline-block;
+    padding: var(--space-3) var(--space-8);
+    background-color: transparent;
+    border: 1px solid var(--color-border);
+    color: var(--color-text-primary);
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wider);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    border-radius: var(--radius-sm);
+    /* For button elements that are <a> tags need line-height adjustment */
+    line-height: inherit;
+    padding: 12px 32px;
+    /* Explicit padding for 'Email Me' and 'View' buttons */
+}
+
+.btn:hover {
+    background-color: var(--color-text-primary);
+    color: var(--color-bg-primary);
+    border-color: var(--color-text-primary);
+}
+
+/* Section Headers */
+.section-header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-2);
+}
+
+.section-subtitle {
+    font-size: var(--font-size-base);
+    color: var(--color-text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-widest);
+}
+
+/* Filters */
+.filter-group {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+    margin-bottom: var(--space-8);
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wider);
+    padding-bottom: var(--space-1);
+    border-bottom: 2px solid transparent;
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover,
+.filter-btn.active {
+    color: var(--color-text-primary);
+    border-bottom-color: var(--color-text-primary);
+}
+
+/* Lightbox */
+.lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.95);
+    z-index: var(--z-modal);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--transition-normal);
+}
+
+.lightbox.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lightbox-img {
+    max-width: 90vw;
+    max-height: 80vh;
+    object-fit: contain;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    animation: zoomIn var(--transition-normal);
+}
+
+.lightbox-caption {
+    margin-top: var(--space-4);
+    color: var(--color-text-secondary);
+    font-family: var(--font-display);
+    font-size: var(--font-size-sm);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: var(--space-8);
+    right: var(--space-8);
+    font-size: var(--font-size-2xl);
+    color: var(--color-text-primary);
+    opacity: 0.7;
+    transition: opacity var(--transition-fast);
+    z-index: 20;
+}
+
+.lightbox-close:hover {
+    opacity: 1;
+}
+
+.lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.2);
+    color: var(--color-text-primary);
+    border: none;
+    font-size: var(--font-size-2xl);
+    padding: var(--space-4);
+    cursor: pointer;
+    transition: background var(--transition-fast);
+    z-index: 10;
+    border-radius: var(--radius-full);
+}
+
+.lightbox-nav:hover {
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-nav.prev {
+    left: var(--space-4);
+}
+
+.lightbox-nav.next {
+    right: var(--space-4);
+}
+
+@keyframes zoomIn {
+    from {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Contact Form */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: var(--space-4);
+}
+
+.form-input,
+.form-textarea {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid var(--color-border);
+    padding: var(--space-2) 0;
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    font-size: var(--font-size-base);
+    transition: border-color var(--transition-fast);
+    border-radius: 0;
+}
+
+.form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+    outline: none;
+    border-bottom-color: var(--color-text-primary);
+}
+
+.form-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-tertiary);
+    transition: all var(--transition-fast);
+    pointer-events: none;
+}
+
+.form-input:focus~.form-label,
+.form-input:not(:placeholder-shown)~.form-label,
+.form-textarea:focus~.form-label,
+.form-textarea:not(:placeholder-shown)~.form-label {
+    top: -20px;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-primary);
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+    margin-top: var(--space-12);
+}
+
+.social-link {
+    color: var(--color-text-secondary);
+    transition: color var(--transition-fast);
+}
+
+.social-link:hover {
+    color: var(--color-text-primary);
+}

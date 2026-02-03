@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>后台管理 - 摄影作品集</title>
+    <link rel="stylesheet" href="../css/variables.css">
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <style>
+        body {
+            padding: var(--space-8);
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-8);
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: var(--space-4);
+        }
+
+        .upload-section {
+            background: var(--color-bg-secondary);
+            padding: var(--space-6);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-8);
+        }
+
+        .photo-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .photo-card {
+            background: var(--color-bg-secondary);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .photo-info {
+            padding: var(--space-2);
+            font-size: var(--font-size-xs);
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 5px;
+        }
+
+        .form-group {
+            margin-bottom: var(--space-4);
+        }
+
+        .form-input,
+        select {
+            width: 100%;
+            padding: 10px;
+            background: var(--color-bg-primary);
+            border: 1px solid var(--color-border);
+            color: var(--color-text-primary);
+            border-radius: var(--radius-sm);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-header">
+        <h1>作品管理后台</h1>
+        <a href="/" class="btn">返回首页</a>
+    </div>
+
+    <div class="upload-section">
+        <h2>上传新作品</h2>
+        <form id="uploadForm">
+            <!-- Drag & Drop Zone -->
+            <div id="dropZone" class="drop-zone">
+                <p>点击或拖拽照片至此</p>
+                <div id="previewContainer"></div>
+                <input type="file" name="photo" id="fileInput" class="file-input" accept="image/*" required>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" name="title" class="form-input" placeholder="输入标题 (可选)">
+                </div>
+                <div class="form-group">
+                    <label>类别</label>
+                    <select name="category" class="form-input">
+                        <option value="nature">自然</option>
+                        <option value="urban">城市</option>
+                        <option value="portrait">人像</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="submit" class="btn upload-btn">上传并发布</button>
+        </form>
+    </div>
+
+    <style>
+        .upload-section {
+            border: 1px dashed #333;
+            background: rgba(255, 255, 255, 0.02);
+            transition: all 0.2s;
+        }
+
+        .upload-section.dragover {
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .drop-zone {
+            position: relative;
+            padding: 30px;
+            text-align: center;
+            cursor: pointer;
+            border: 2px dashed rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #888;
+        }
+
+        .drop-zone:hover {
+            border-color: #666;
+            color: #fff;
+        }
+
+        .file-input {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        .upload-btn {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+
+    <h2>已发布作品</h2>
+    <div id="photoList" class="photo-list">
+        <!-- Dynamic Content -->
+    </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>编辑作品信息</h2>
+            <form id="editForm">
+                <input type="hidden" name="id">
+                <div class="form-group">
+                    <label>标题</label>
+                    <input type="text" name="title" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label>系列</label>
+                    <input type="text" name="series" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>类别</label>
+                    <select name="category" class="form-input">
+                        <option value="nature">自然</option>
+                        <option value="urban">城市</option>
+                        <option value="portrait">人像</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">保存修改</button>
+            </form>
+        </div>
+    </div>
+
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background-color: var(--color-bg-secondary);
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            width: 80%;
+            max-width: 500px;
+            border-radius: var(--radius-md);
+            position: relative;
+        }
+
+        .close-modal {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: white;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .edit-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .delete-btn {
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            flex: 1;
+        }
+    </style>
+
+    <script>
+        const uploadForm = document.getElementById('uploadForm');
+        const editModal = document.getElementById('editModal');
+        const editForm = document.getElementById('editForm');
+        const closeModal = document.querySelector('.close-modal');
+        const dropZone = document.getElementById('dropZone');
+        const fileInput = document.getElementById('fileInput');
+        const previewContainer = document.getElementById('previewContainer');
+
+        // Drag & Drop Visuals
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                document.querySelector('.upload-section').classList.add('dragover');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                document.querySelector('.upload-section').classList.remove('dragover');
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', (e) => {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            if (files.length) {
+                fileInput.files = files; // Assign dropped file to input
+                showPreview(files[0]);
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length) {
+                showPreview(e.target.files[0]);
+            }
+        });
+
+        function showPreview(file) {
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                previewContainer.innerHTML = `<img src="${e.target.result}" style="max-height: 150px; margin-top: 10px; border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.3);">`;
+                dropZone.querySelector('p').style.display = 'none';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Fetch and display photos
+        async function loadPhotos() {
+            const res = await fetch('/api/photos');
+            const photos = await res.json();
+
+            photoList.innerHTML = photos.map(photo => `
+                <div class="photo-card">
+                    <img src="${photo.url}" loading="lazy">
+                    <div class="photo-info">
+                        <strong>${photo.title}</strong>
+                        ${photo.series ? `<span style="font-size:0.8em; color:var(--color-accent)">[${photo.series}]</span>` : ''}
+                        <br>
+                        <span style="color: var(--color-text-secondary)">${photo.category}</span>
+                        <div class="btn-group">
+                            <button class="edit-btn" onclick='openEditModal(${JSON.stringify(photo)})'>编辑</button>
+                            <button class="delete-btn" onclick="deletePhoto('${photo.id}')">删除</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Modal Logic
+        window.openEditModal = (photo) => {
+            editForm.id.value = photo.id;
+            editForm.title.value = photo.title;
+            editForm.series.value = photo.series || '';
+            editForm.category.value = photo.category;
+            editModal.style.display = 'block';
+        };
+
+        closeModal.onclick = () => {
+            editModal.style.display = 'none';
+        };
+
+        window.onclick = (event) => {
+            if (event.target == editModal) {
+                editModal.style.display = 'none';
+            }
+        };
+
+        // Submit Edit
+        editForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = editForm.id.value;
+            const title = editForm.title.value;
+            const category = editForm.category.value;
+            const series = editForm.series.value;
+
+            try {
+                const res = await fetch(`/api/photos/${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ title, category, series })
+                });
+
+                if (res.ok) {
+                    alert('修改成功！');
+                    editModal.style.display = 'none';
+                    loadPhotos();
+                } else {
+                    alert('修改失败');
+                }
+            } catch (err) {
+                console.error(err);
+                alert('发生错误');
+            }
+        });
+
+        // Upload Photo
+        uploadForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const formData = new FormData(uploadForm);
+
+            try {
+                const res = await fetch('/api/photos', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (res.ok) {
+                    alert('上传成功！');
+                    uploadForm.reset();
+                    // Reset Preview
+                    previewContainer.innerHTML = '';
+                    dropZone.querySelector('p').style.display = 'block';
+                    loadPhotos();
+                } else {
+                    if (res.status === 401) {
+                        alert('登录已过期，请重新登录');
+                        window.location.href = '/login.html';
+                        return;
+                    }
+                    const data = await res.json();
+                    alert('上传失败: ' + (data.error || '未知错误'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('上传请求失败');
+            }
+        });
+
+        // Delete Photo
+        window.deletePhoto = async (id) => {
+            if (!confirm('确定要删除这张照片吗？')) return;
+
+            try {
+                const res = await fetch(`/api/photos/${id}`, { method: 'DELETE' });
+                if (res.ok) {
+                    loadPhotos();
+                } else {
+                    if (res.status === 401) {
+                        alert('登录已过期，请重新登录');
+                        window.location.href = '/login.html';
+                        return;
+                    }
+                    const data = await res.json();
+                    alert('删除失败: ' + (data.error || '未知错误'));
+                }
+            } catch (err) {
+                console.error(err);
+                alert('删除请求失败');
+            }
+        };
+
+        // Init
+        loadPhotos();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>摄影作品集</title>
+    <meta name="description" content="极简风格的个人摄影作品集，展示沉浸式视觉体验。">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">光影 | Lens & Light</a>
+
+                <button class="menu-toggle" aria-label="切换菜单">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+
+                <ul class="nav-list">
+                    <li><a href="#hero" class="nav-link">首页</a></li>
+                    <li><a href="gallery.html" class="nav-link">作品廊</a></li>
+                    <li><a href="#about" class="nav-link">关于</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80"
+            alt="背景图" class="hero-bg">
+        <div class="hero-content">
+            <h1 class="hero-title">捕捉瞬间</h1>
+            <p class="hero-subtitle">透过镜头诉说光影故事</p>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">精选作品</h2>
+                <p class="section-subtitle">视界所及 心之所谓</p>
+            </div>
+
+            <!-- Filters & View Toggle -->
+            <div class="filter-bar"
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--space-8); flex-wrap: wrap; gap: var(--space-4);">
+                <div class="filter-group" style="margin-bottom: 0;">
+                    <button class="filter-btn active" data-filter="all">全部</button>
+                    <button class="filter-btn" data-filter="nature">自然</button>
+                    <button class="filter-btn" data-filter="urban">城市</button>
+                    <button class="filter-btn" data-filter="portrait">人像</button>
+                </div>
+
+                <div class="view-toggle">
+                    <button class="btn view-btn active" data-view="grid" aria-label="网格视图">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="3" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="3" width="7" height="7"></rect>
+                            <rect x="14" y="14" width="7" height="7"></rect>
+                            <rect x="3" y="14" width="7" height="7"></rect>
+                        </svg>
+                    </button>
+                    <button class="btn view-btn" data-view="masonry" aria-label="瀑布流视图">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 3h7v7H3zM14 3h7v13h-7zM14 18h7v3h-7zM3 12h7v9H3z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Grid -->
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Dynamic Content Loading... -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section" style="background-color: var(--color-bg-secondary)">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">关于我</h2>
+            </div>
+            <div class="flex-center"
+                style="flex-direction: column; text-align: center; max-width: 600px; margin: 0 auto;">
+                <p
+                    style="margin-bottom: var(--space-4); font-size: var(--font-size-lg); color: var(--color-text-primary);">
+                    "直抵灵魂的视觉叙事。"
+                </p>
+                <p style="margin-bottom: var(--space-8);">
+                    我是一名常驻世界创意中心的摄影师。我的热情在于捕捉自然的原始之美和城市生活的错综复杂。我信奉极简主义，相信影像中静默的力量。
+                </p>
+
+                <!-- Social Media -->
+                <div class="social-links" style="margin-top: var(--space-4);">
+                    <a href="#" class="social-link" aria-label="Instagram">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path
+                                d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z">
+                            </path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Behance">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                            <polyline points="17 8 12 3 7 8"></polyline>
+                            <line x1="12" y1="3" x2="12" y2="15"></line>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer
+        style="padding: var(--space-8) 0; text-align: center; color: var(--color-text-tertiary); font-size: var(--font-size-xs);">
+        <p>&copy; 2024 Lens & Light. All rights reserved.</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

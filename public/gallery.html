@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作品廊 | 光影</title>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Montserrat:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css"> <!-- Reusing components like buttons/lightbox -->
+    <link rel="stylesheet" href="css/gallery.css">
+</head>
+
+<body>
+
+    <header class="gallery-page-header">
+        <a href="index.html" class="logo">Lens & Light</a>
+        <a href="index.html" class="back-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            返回首页
+        </a>
+    </header>
+
+    <main id="gallery-container" class="gallery-container">
+        <!-- Dynamic Content -->
+        <div class="loading">正在加载光影...</div>
+    </main>
+
+    <script src="js/gallery.js"></script>
+</body>
+
+</html>
